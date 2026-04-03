@@ -508,23 +508,57 @@
     #services { background: var(--bg-secondary); }
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(12, 1fr);
       gap: 24px;
+      align-items: stretch;
     }
     .service-card {
-      text-align: center;
+      text-align: left;
       cursor: default;
+      min-height: 260px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+      isolation: isolate;
     }
+    .service-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at top right, rgba(232,49,74,0.14), transparent 35%);
+      opacity: 0;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      left: -30px; bottom: -30px;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(232,49,74,0.12), transparent 68%);
+      filter: blur(6px);
+      pointer-events: none;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-red);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.32);
+    }
+    .service-card:hover::before { opacity: 1; }
     .service-icon-wrap {
-      width: 70px; height: 70px;
-      border-radius: 18px;
+      width: 72px; height: 72px;
+      border-radius: 22px;
       background: var(--red-glow-soft);
       border: 1px solid var(--border-red);
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
+      margin: 0 0 4px;
       font-size: 1.8rem;
       color: var(--red);
       transition: var(--transition);
+      box-shadow: inset 0 0 0 1px rgba(232,49,74,0.08);
     }
     .service-card:hover .service-icon-wrap {
       background: var(--red);
@@ -534,53 +568,141 @@
     }
     .service-card h3 {
       font-family: var(--font-heading);
-      font-size: 1.1rem; font-weight: 700;
-      margin-bottom: 10px;
+      font-size: 1.3rem; font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0;
     }
     .service-card p {
-      font-size: 0.88rem;
+      font-size: 0.93rem;
       color: var(--text-secondary);
       line-height: 1.7;
+      max-width: 32ch;
     }
+    .services-grid .service-card:nth-child(1) { grid-column: span 5; }
+    .services-grid .service-card:nth-child(2) { grid-column: span 4; }
+    .services-grid .service-card:nth-child(3) { grid-column: span 3; }
+    .services-grid .service-card:nth-child(4) { grid-column: span 3; }
+    .services-grid .service-card:nth-child(5) { grid-column: span 5; }
+    .services-grid .service-card:nth-child(6) { grid-column: span 4; }
 
     /* ============================================================
        SKILLS SECTION
     ============================================================ */
-    .skills-categories { display: flex; flex-direction: column; gap: 40px; }
+    #skills {
+      background:
+        radial-gradient(circle at 88% 6%, rgba(232,49,74,0.12), transparent 26%),
+        linear-gradient(180deg, #070b14 0%, #090f1d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #skills::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+      pointer-events: none;
+    }
+    .skills-categories {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      position: relative;
+      z-index: 1;
+    }
+    .skills-categories > div {
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      padding: 20px 22px 22px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.035), rgba(255,255,255,0.015));
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+    }
+    .skills-categories > div::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: radial-gradient(circle at 92% 0%, rgba(232,49,74,0.12), transparent 34%);
+      opacity: 0;
+      transition: var(--transition);
+      pointer-events: none;
+    }
+    .skills-categories > div:hover {
+      border-color: var(--border-red);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+    }
+    .skills-categories > div:hover::after { opacity: 1; }
     .skill-category-title {
       font-family: var(--font-heading);
-      font-size: 0.85rem; font-weight: 700;
-      letter-spacing: 0.1em;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       display: flex; align-items: center; gap: 12px;
+    }
+    .skill-category-title::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 12px var(--red-glow);
+      flex-shrink: 0;
     }
     .skill-category-title::after {
       content: ''; flex: 1; height: 1px;
-      background: var(--border);
+      background: linear-gradient(to right, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
     }
     .skills-row {
       display: flex; flex-wrap: wrap; gap: 12px;
     }
     .skill-pill {
       display: inline-flex; align-items: center; gap: 10px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 18px;
-      font-size: 0.88rem; font-weight: 500;
+      background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #d9deea;
       transition: var(--transition);
       cursor: default;
+      position: relative;
+      overflow: hidden;
     }
-    .skill-pill i { font-size: 1.2rem; color: var(--red); transition: var(--transition); }
+    .skill-pill::before {
+      content: '';
+      position: absolute;
+      left: -120%;
+      top: 0;
+      width: 80%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+    .skill-pill i {
+      font-size: 1.1rem;
+      color: var(--red);
+      transition: var(--transition);
+      filter: drop-shadow(0 0 8px rgba(232,49,74,0.22));
+    }
     .skill-pill:hover {
-      border-color: var(--red);
-      background: var(--red-glow-soft);
+      border-color: var(--border-red);
+      background: linear-gradient(145deg, rgba(232,49,74,0.18), rgba(232,49,74,0.08));
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 26px rgba(0,0,0,0.3);
     }
-    .skill-pill:hover i { text-shadow: 0 0 10px var(--red); }
+    .skill-pill:hover::before { left: 140%; }
+    .skill-pill:hover i {
+      color: #ff6d82;
+      text-shadow: 0 0 10px var(--red);
+      transform: scale(1.08);
+    }
 
     /* ============================================================
        ACHIEVEMENTS SECTION
@@ -665,6 +787,56 @@
     }
     .timeline-card p {
       color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7;
+    }
+    .edu-card-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+    .edu-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--border-red);
+      background: rgba(255,255,255,0.04);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 0 3px rgba(232,49,74,0.08);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.06em;
+    }
+    .edu-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .edu-logo-rect {
+      border-radius: 12px;
+      width: 58px;
+      height: 58px;
+    }
+    .edu-results {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .edu-chip {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--red);
+      background: var(--red-glow-soft);
+      border: 1px solid var(--border-red);
+      border-radius: 999px;
+      padding: 5px 10px;
+      letter-spacing: 0.03em;
     }
 
     .resume-cols {
@@ -979,13 +1151,18 @@
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .stat-item:nth-child(2)::after { display: none; }
       .contact-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid .service-card { grid-column: auto; }
     }
     @media (max-width: 768px) {
       section { padding: 80px 0; }
       .nav-menu { display: none; }
       .hamburger { display: flex; }
       .projects-grid { grid-template-columns: 1fr; }
-      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .skills-categories > div { padding: 18px 16px 18px; }
+      .skill-category-title { font-size: 0.8rem; letter-spacing: 0.08em; }
+      .skill-pill { font-size: 0.88rem; padding: 9px 14px; }
       .form-row { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -1052,8 +1229,7 @@
             <span id="typed-text"></span><span class="typing-cursor"></span>
           </div>
           <p class="hero-desc fade-up delay-3">
-            A passionate Full-Stack Developer crafting pixel-perfect, performant web experiences.
-            I blend clean code with thoughtful design to build products that make an impact.
+            A passionate Full-Stack Developer and CSE student at KUET, dedicated to building impactful and scalable digital solutions. I blend clean, efficient code with modern design principles, while actively exploring AI and data-driven technologies to solve real-world challenges and create meaningful innovation.
           </p>
           <div class="hero-buttons fade-up delay-4">
             <a href="#contact" class="btn btn-primary">
@@ -1245,27 +1421,37 @@
           </div>
           <div class="timeline">
             <div class="timeline-item">
-              <div class="timeline-year">2020 — Present</div>
+              <div class="timeline-year">2022 — Present</div>
               <div class="timeline-card">
-                <h3>BSc in Computer Science & Engineering</h3>
-                <div class="org">Khulna University of Engineering & Technology (KUET)</div>
-                <p>Studying core computer science fundamentals including data structures, algorithms, software engineering, databases, and networking. Active member of the programming club.</p>
+                <div class="edu-card-head">
+                  <div class="edu-logo edu-logo-rect">
+                    <img src="kuet-logo.svg?v=2" alt="Khulna University of Engineering & Technology (KUET) logo" onerror="this.style.display='none'; this.parentElement.textContent='KUET';">
+                  </div>
+                  <div>
+                    <h3>BSc in Computer Science & Engineering</h3>
+                    <div class="org">Khulna University of Engineering & Technology (KUET)</div>
+                  </div>
+                </div>
+                <p>Studying core computer science fundamentals including data structures, algorithms, software engineering, databases, and networking.</p>
               </div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-year">2017 — 2019</div>
+              <div class="timeline-year">2020 — 2022</div>
               <div class="timeline-card">
-                <h3>Higher Secondary Certificate (HSC)</h3>
-                <div class="org">Science Division — GPA 5.00</div>
-                <p>Completed HSC with distinction in Mathematics, Physics, and Chemistry. Ranked among the top students in Khulna division.</p>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <div class="timeline-year">2015 — 2017</div>
-              <div class="timeline-card">
-                <h3>Secondary School Certificate (SSC)</h3>
-                <div class="org">Science Division — GPA 5.00</div>
-                <p>Completed SSC with full marks in science subjects, demonstrating strong analytical and mathematical foundations.</p>
+                <div class="edu-card-head">
+                  <div class="edu-logo"> 
+                    <img src="mcsk-logo.png" alt="Military Collegiate School Khulna (MCSK) logo" onerror="this.style.display='none'; this.parentElement.textContent='MCSK';">
+                  </div>
+                  <div>
+                    <h3>SSC & HSC (Science)</h3>
+                    <div class="org">Military Collegiate School Khulna (MCSK) — Jashore Board</div>
+                  </div>
+                </div>
+                <p>Completed both Secondary School Certificate (SSC) and Higher Secondary Certificate (HSC) from Military Collegiate School Khulna (MCSK) under Jashore Board with excellent academic performance.</p>
+                <div class="edu-results">
+                  <span class="edu-chip">SSC (2020): GPA 5.00</span>
+                  <span class="edu-chip">HSC (2022): GPA 5.00</span>
+                </div>
               </div>
             </div>
           </div>
@@ -1454,7 +1640,7 @@
 
           <div class="social-links">
             <a href="https://www.linkedin.com/in/md-khorshed-sheikh-734571328" class="social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><i class='bx bxl-linkedin'></i></a>
-            <a href="#" class="social-link" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+            <a href="https://github.com/khorshed68" class="social-link" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><i class='bx bxl-github'></i></a>
             <a href="https://www.facebook.com/share/1Autw7QpsC/" class="social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i class='bx bxl-facebook'></i></a>
             <a href="https://www.instagram.com/khorshed_68?igsh=MXMyeWV1eTc2MzFhNQ==" class="social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer"><i class='bx bxl-instagram'></i></a>
           </div>
@@ -1462,24 +1648,27 @@
 
         <!-- Form -->
         <div class="fade-up delay-2">
-          <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+          <form class="contact-form" id="contactForm" name="contact" method="POST" action="https://formsubmit.co/sheikhkhorshed1668@gmail.com" target="hidden_iframe" onsubmit="handleSubmit(event)">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_subject" value="New portfolio message">
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label">Your Name</label>
-                <input type="text" class="form-input" placeholder="John Doe" required>
+                <input type="text" class="form-input" name="name" placeholder="John Doe" required>
               </div>
               <div class="form-group">
                 <label class="form-label">Your Email</label>
-                <input type="email" class="form-input" placeholder="john@email.com" required>
+                <input type="email" class="form-input" name="email" placeholder="john@email.com" required>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label">Subject</label>
-              <input type="text" class="form-input" placeholder="Project Inquiry..." required>
+              <input type="text" class="form-input" name="subject" placeholder="Project Inquiry..." required>
             </div>
             <div class="form-group">
               <label class="form-label">Message</label>
-              <textarea class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+              <textarea class="form-textarea" name="message" placeholder="Tell me about your project..." required></textarea>
             </div>
             <button type="submit" class="btn btn-primary form-submit">
               <i class='bx bx-send'></i> Send Message
@@ -1488,6 +1677,7 @@
               ✓ Message sent! I'll get back to you shortly.
             </div>
           </form>
+          <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
         </div>
       </div>
     </div>
@@ -1623,22 +1813,40 @@
     counters.forEach(c => counterObserver.observe(c));
 
     /* ---- Contact form ---- */
+    let contactFormSubmitted = false;
+
     function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
+      const form = e.target;
+      const btn = form.querySelector('.form-submit');
+      const success = document.getElementById('formSuccess');
+
+      contactFormSubmitted = true;
       btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
       btn.disabled = true;
-      setTimeout(() => {
-        btn.innerHTML = '<i class="bx bx-check"></i> Sent!';
-        document.getElementById('formSuccess').style.display = 'block';
-        e.target.reset();
-        setTimeout(() => {
-          btn.innerHTML = '<i class="bx bx-send"></i> Send Message';
-          btn.disabled = false;
-          document.getElementById('formSuccess').style.display = 'none';
-        }, 4000);
-      }, 1500);
+      success.style.display = 'none';
+
+      form.submit();
     }
+
+    document.getElementById('hidden_iframe').addEventListener('load', () => {
+      if (!contactFormSubmitted) return;
+
+      const form = document.getElementById('contactForm');
+      const btn = form.querySelector('.form-submit');
+      const success = document.getElementById('formSuccess');
+
+      contactFormSubmitted = false;
+      form.reset();
+      btn.innerHTML = '<i class="bx bx-check"></i> Sent!';
+      success.style.display = 'block';
+
+      setTimeout(() => {
+        btn.innerHTML = '<i class="bx bx-send"></i> Send Message';
+        btn.disabled = false;
+        window.location.href = 'thank-you.html';
+      }, 900);
+    });
 
     /* ---- Smooth scroll for all anchor links ---- */
     document.querySelectorAll('a[href^="#"]').forEach(a => {
